@@ -35,18 +35,22 @@
                 app:layout_constraintStart_toStartOf="parent" android:orientation="horizontal"
                 android:layout_marginTop="8dp" android:layout_marginStart="24dp" android:id="@+id/radioGroup2">
             <RadioButton
+                    android:text="Straight"
+                    android:buttonTint="@color/colorPrimary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/radioButton5" android:layout_weight="1"/>
+            <RadioButton
+                    android:buttonTint="@color/colorPrimary"
+                    android:text="Gay/Lesbian"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/radioButton6" android:layout_weight="1"/>
+
+            <RadioButton
+                    android:buttonTint="@color/colorPrimary"
                     android:checked="true"
                     android:text="Bisexual"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:id="@+id/radioButton7" android:layout_weight="1"/>
-            <RadioButton
-                    android:text="Gay/Lesbia"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/radioButton6" android:layout_weight="1"/>
-            <RadioButton
-                    android:text="Straight"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/radioButton5" android:layout_weight="1"/>
         </RadioGroup>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -54,7 +58,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginStart="24dp"
-                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 app:boxStrokeColor="@color/colorPrimary"
                 app:boxStrokeWidth="3dp" android:id="@+id/userInputLayout"
                 android:layout_marginEnd="16dp"
@@ -68,7 +72,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="number"
-                    android:layout_gravity="bottom"/>
+                    android:layout_gravity="bottom"
+            />
         </com.google.android.material.textfield.TextInputLayout>
         <TextView
                 android:text="Do you have social fear?"
@@ -86,10 +91,12 @@
             <RadioButton
                     android:checked="true"
                     android:text="Yes"
+                    android:buttonTint="@color/colorPrimary"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:id="@+id/radioButton9" android:layout_weight="1"/>
             <RadioButton
                     android:text="No"
+                    android:buttonTint="@color/colorPrimary"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:id="@+id/radioButton8" android:layout_weight="1"/>
         </RadioGroup>
@@ -109,11 +116,13 @@
                 android:orientation="horizontal" android:layout_marginTop="8dp" android:id="@+id/radioGroup4">
             <RadioButton
                     android:checked="true"
+                    android:buttonTint="@color/colorPrimary"
                     android:text="Yes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:id="@+id/radioButton11" android:layout_weight="1"/>
             <RadioButton
                     android:text="No"
+                    android:buttonTint="@color/colorPrimary"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:id="@+id/radioButton10" android:layout_weight="1"/>
         </RadioGroup>
