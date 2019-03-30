@@ -89,7 +89,7 @@ class QuestionSet3 : Fragment() {
 
         call.enqueue(object:Callback<Base>{
             override fun onFailure(call: Call<Base>, t: Throwable) {
-                Toast.makeText(context, "Not able to submit", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Not able to submit: ${t.message}", Toast.LENGTH_SHORT).show()
             }
 
             override fun onResponse(call: Call<Base>, response: Response<Base>) {
