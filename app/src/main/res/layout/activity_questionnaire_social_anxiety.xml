@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <TextView
+            android:text="During the PAST 7 DAYS, I have..."
+            style="@android:style/TextAppearance.Material.Title"
+            android:padding="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    <androidx.viewpager.widget.ViewPager
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/socialAnxietyViewPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".tracks.socialAnxiety.QuestionnaireSocialAnxietyActivity">
+    </androidx.viewpager.widget.ViewPager>
+</LinearLayout>

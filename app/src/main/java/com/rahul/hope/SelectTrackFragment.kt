@@ -7,8 +7,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.rahul.hope.activities.QuestionnaireDepressionActivity
 import com.rahul.hope.listeners.LaunchBottomSheetListener
+import com.rahul.hope.tracks.depression.QuestionnaireDepressionActivity
+import com.rahul.hope.tracks.socialAnxiety.QuestionnaireSocialAnxietyActivity
 import kotlinx.android.synthetic.main.fragment_select_track.*
 
 class SelectTrackFragment : Fragment() {
@@ -31,6 +32,11 @@ class SelectTrackFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         depressionButton.setOnClickListener {
             val intent = Intent(context, QuestionnaireDepressionActivity::class.java)
+            startActivity(intent)
+        }
+
+        socialAnxietyButton.setOnClickListener {
+            val intent = Intent(context, QuestionnaireSocialAnxietyActivity::class.java)
             startActivity(intent)
         }
     }
