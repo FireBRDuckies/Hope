@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.rahul.hope.listeners.LaunchBottomSheetListener
+import com.rahul.hope.tracks.depression.DepressionMeasureActivity
 import com.rahul.hope.tracks.depression.QuestionnaireDepressionActivity
 import com.rahul.hope.tracks.socialAnxiety.QuestionnaireSocialAnxietyActivity
 import kotlinx.android.synthetic.main.fragment_select_track.*

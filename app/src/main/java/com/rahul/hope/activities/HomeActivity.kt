@@ -381,7 +381,7 @@ class HomeActivity : AppCompatActivity(), LaunchBottomSheetListener, JobListener
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         val id = item?.itemId
-        if(id == R.id.book_appointment){
+        if(id == R.id.action_book_appointment){
             val appointment = Appointment(statusProgressBar.progress.toLong())
             FirebaseDatabase.getInstance().getReference("appointments/").push().setValue(appointment)
         }

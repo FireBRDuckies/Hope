@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools" package="com.rahul.hope">
+          xmlns:tools="http://schemas.android.com/tools"
+          package="com.rahul.hope">
 
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
     <uses-permission android:name="android.permission.SEND_SMS"/>
-    
+
     <application
             android:name=".HopeApplication"
             android:allowBackup="true"
@@ -15,6 +16,8 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".tracks.depression.QuestionnaireDepressionActivity">
+        </activity>
         <activity android:name=".tracks.socialAnxiety.QuestionnaireSocialAnxietyActivity">
         </activity>
         <activity android:name=".activities.AppointmentActivity">
@@ -29,11 +32,12 @@
         <activity android:name=".activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
+
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity
-                android:name=".tracks.depression.QuestionnaireDepressionActivity"
+                android:name=".tracks.depression.DepressionMeasureActivity"
                 android:label="Initial Form">
         </activity>
     </application>
