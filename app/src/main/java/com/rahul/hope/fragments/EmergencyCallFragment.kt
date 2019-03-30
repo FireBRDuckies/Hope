@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.rahul.hope.activities.HopeApplication
+import com.rahul.hope.HopeApplication
 import com.rahul.hope.R
 import com.rahul.hope.adapters.ContactAdapter
 import com.rahul.hope.listeners.JobListener

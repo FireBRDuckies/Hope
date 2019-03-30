@@ -1,4 +1,4 @@
-package com.rahul.hope.activities
+package com.rahul.hope
 
 import android.app.Application
 import com.google.firebase.database.FirebaseDatabase

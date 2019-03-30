@@ -1,4 +1,4 @@
-package com.rahul.hope
+package com.rahul.hope.tracks.depression
 
 
 import android.content.Context
@@ -13,8 +13,8 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.rahul.hope.*
 import com.rahul.hope.activities.HomeActivity
-import com.rahul.hope.activities.HopeApplication
 import com.rahul.hope.data.DataRepository
 import com.rahul.hope.data.network.ApiService
 import com.rahul.hope.data.network.Base
@@ -60,7 +60,9 @@ class QuestionSet3 : Fragment() {
                     Answers.Virgin = radioButton10.text.toString()
                 }
 
-                Log.v("Answers:",Answers.Gender+" "+Answers.Age+" "+Answers.Bodyweight+" "+Answers.Depressed+" "+Answers.Education+" "+Answers.Employment+" "+Answers.Friends+" "+Answers.Income+" "+Answers.Race+" "+Answers.Sexuality+" "+Answers.SocialFear+" "+Answers.Virgin)
+                Log.v("Answers:",
+                    Answers.Gender +" "+ Answers.Age +" "+ Answers.Bodyweight +" "+ Answers.Depressed +" "+ Answers.Education +" "+ Answers.Employment +" "+ Answers.Friends +" "+ Answers.Income +" "+ Answers.Race +" "+ Answers.Sexuality +" "+ Answers.SocialFear +" "+ Answers.Virgin
+                )
 
 
             }

@@ -1,4 +1,4 @@
-package com.rahul.hope.fragments
+package com.rahul.hope.tracks.depression
 
 
 import android.content.Context
@@ -8,7 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.rahul.hope.activities.HopeApplication
+import com.rahul.hope.HopeApplication
 
 import com.rahul.hope.R
 import com.rahul.hope.data.DataRepository
@@ -20,7 +20,6 @@ import kotlinx.android.synthetic.main.fragment_search.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-
 
 class SearchFragment : Fragment() {
     private lateinit var roomViewModelFactory: DataRepository

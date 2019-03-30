@@ -1,6 +1,7 @@
 package com.rahul.hope.activities
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.content.SharedPreferences
@@ -11,16 +12,18 @@ import android.os.Bundle
 import android.provider.ContactsContract
 import android.telephony.SmsManager
 import android.util.Log
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.MotionEvent
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
+import com.rahul.hope.HopeApplication
 import com.rahul.hope.R
 import com.rahul.hope.STATUS
 import com.rahul.hope.data.DataRepository
@@ -30,22 +33,18 @@ import com.rahul.hope.listeners.JobListener
 import com.rahul.hope.listeners.LaunchBottomSheetListener
 import com.rahul.hope.sharedPath
 import com.rahul.hope.viewmodels.ContactsViewModel
-
 import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.android.synthetic.main.content_home.*
 import kotlinx.android.synthetic.main.fragment_home.*
 
 class HomeActivity : AppCompatActivity(), LaunchBottomSheetListener, JobListener {
     private var phoneNo = ""
-
+    private lateinit var fragment:View
     private lateinit var sharedPreferences: SharedPreferences
     private val TAG = HomeActivity::class.java.simpleName
-    private val REQUEST_CONTACTS_PERMISSION = 1234
-    private val REQUEST_CALL_PERMISSION = 1235
-    private val REQUEST_SMS_PERMISSION = 1236
-    private lateinit var bottomSheetBehavior: BottomSheetBehavior<View>
     private lateinit var bottomSheetBehavior2: BottomSheetBehavior<View>
     private lateinit var dataRepository: DataRepository
-    private lateinit var viewModel : ContactsViewModel
+    private lateinit var viewModel: ContactsViewModel
     private var currentSheet = 0
 
     private var displayName = FirebaseAuth.getInstance().currentUser?.displayName!!
@@ -57,6 +56,7 @@ class HomeActivity : AppCompatActivity(), LaunchBottomSheetListener, JobListener
         "Once you choose hope, anything is possible.",
         "A positive attitude gives you power over your circumstances instead of your circumstances having power over you."
     )
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
@@ -67,7 +67,6 @@ class HomeActivity : AppCompatActivity(), LaunchBottomSheetListener, JobListener
         val viewModelFactory = (application as HopeApplication).applicationComponent.getViewModelFactory()
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(ContactsViewModel::class.java)
 
-        shadowView.visibility = View.GONE
         shadowView2.visibility = View.GONE
 
         userNameTextView.text = "Hello, $displayName"
@@ -78,38 +77,18 @@ class HomeActivity : AppCompatActivity(), LaunchBottomSheetListener, JobListener
         fab.setOnClickListener {
             bottomSheetBehavior2.state = BottomSheetBehavior.STATE_EXPANDED
         }
-
-        bottomSheetBehavior = BottomSheetBehavior.from(design_bottom_sheet.view)
-        bottomSheetBehavior2 = BottomSheetBehavior.from(design_bottom_sheet2.view)
-        bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+        fragment= findViewById((R.id.design_bottom_sheet2))
+        bottomSheetBehavior2 = BottomSheetBehavior.from(fragment)
         bottomSheetBehavior2.state = BottomSheetBehavior.STATE_HIDDEN
-        bottomSheetBehavior.setBottomSheetCallback(object: BottomSheetBehavior.BottomSheetCallback() {
+
+        bottomSheetBehavior2.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
 
             }
 
+            @SuppressLint("SwitchIntDef")
             override fun onStateChanged(bottomSheet: View, newState: Int) {
-                when(newState) {
-                    BottomSheetBehavior.STATE_HIDDEN -> {
-                        shadowView.visibility = View.GONE
-                        fab.show()
-                    }
-                    else -> {
-                        shadowView.visibility = View.VISIBLE
-                        fab.hide()
-                    }
-                }
-            }
-
-        })
-
-        bottomSheetBehavior2.setBottomSheetCallback(object: BottomSheetBehavior.BottomSheetCallback() {
-            override fun onSlide(bottomSheet: View, slideOffset: Float) {
-
-            }
-
-            override fun onStateChanged(bottomSheet: View, newState: Int) {
-                when(newState) {
+                when (newState) {
                     BottomSheetBehavior.STATE_HIDDEN -> {
                         shadowView2.visibility = View.GONE
                         fab.show()
@@ -126,21 +105,10 @@ class HomeActivity : AppCompatActivity(), LaunchBottomSheetListener, JobListener
 
     override fun dispatchTouchEvent(event: MotionEvent): Boolean {
         if (event.action == MotionEvent.ACTION_DOWN) {
-            if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED) {
+            if (bottomSheetBehavior2.state == BottomSheetBehavior.STATE_EXPANDED) {
 
                 val outRect = Rect()
-                design_bottom_sheet.view?.getGlobalVisibleRect(outRect)
-
-                if (!outRect.contains(event.rawX.toInt(), event.rawY.toInt())) {
-                    bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
-
-                    return true
-                }
-
-            } else if (bottomSheetBehavior2.state == BottomSheetBehavior.STATE_EXPANDED) {
-
-                val outRect = Rect()
-                design_bottom_sheet2.view?.getGlobalVisibleRect(outRect)
+                fragment.getGlobalVisibleRect(outRect)
 
                 if (!outRect.contains(event.rawX.toInt(), event.rawY.toInt())) {
                     bottomSheetBehavior2.state = BottomSheetBehavior.STATE_HIDDEN
@@ -154,18 +122,16 @@ class HomeActivity : AppCompatActivity(), LaunchBottomSheetListener, JobListener
     }
 
     override fun onBackPressed() {
-        if(bottomSheetBehavior.state != BottomSheetBehavior.STATE_HIDDEN) {
-            bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
-        } else if(bottomSheetBehavior2.state != BottomSheetBehavior.STATE_HIDDEN) {
+        if (bottomSheetBehavior2.state != BottomSheetBehavior.STATE_HIDDEN) {
             bottomSheetBehavior2.state = BottomSheetBehavior.STATE_HIDDEN
-        }else {
+        } else {
             super.onBackPressed()
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if(requestCode == EmergencyCallFragment.REQUEST_CONTACT) {
-            if(resultCode == Activity.RESULT_OK) {
+        if (requestCode == EmergencyCallFragment.REQUEST_CONTACT) {
+            if (resultCode == Activity.RESULT_OK) {
                 val result = data?.data
 
                 val id = result?.lastPathSegment
@@ -173,13 +139,14 @@ class HomeActivity : AppCompatActivity(), LaunchBottomSheetListener, JobListener
                     ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
                     null,
                     ContactsContract.CommonDataKinds.Phone._ID + "=?",
-                    arrayOf(id), null)
+                    arrayOf(id), null
+                )
 
                 val phoneIdx = c!!.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)
                 val nameIdx = c.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME)
-                if(c.count == 1) { // contact has a single phone number
+                if (c.count == 1) { // contact has a single phone number
                     // get the only phone number
-                    if(c.moveToFirst()) {
+                    if (c.moveToFirst()) {
                         val phone = c.getString(phoneIdx)
                         val name = c.getString(nameIdx)
                         dataRepository.addContact(EmergencyContactEntry(phone, name))
@@ -195,7 +162,7 @@ class HomeActivity : AppCompatActivity(), LaunchBottomSheetListener, JobListener
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        when(requestCode) {
+        when (requestCode) {
             REQUEST_CONTACTS_PERMISSION -> {
                 if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                     onJobRequested(EmergencyCallFragment.REQUEST_CONTACT)
@@ -228,10 +195,13 @@ class HomeActivity : AppCompatActivity(), LaunchBottomSheetListener, JobListener
     override fun makeCall(number: String) {
         phoneNo = number
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE)
-            != PackageManager.PERMISSION_GRANTED) {
+            != PackageManager.PERMISSION_GRANTED
+        ) {
 
-            ActivityCompat.requestPermissions(this,
-                arrayOf(Manifest.permission.CALL_PHONE), REQUEST_CALL_PERMISSION)
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.CALL_PHONE), REQUEST_CALL_PERMISSION
+            )
         } else {
             val callIntent = Intent(Intent.ACTION_CALL)
             callIntent.data = Uri.parse("tel:$phoneNo")
@@ -240,12 +210,15 @@ class HomeActivity : AppCompatActivity(), LaunchBottomSheetListener, JobListener
     }
 
     override fun onJobRequested(code: Int) {
-        if(code == EmergencyCallFragment.REQUEST_CONTACT) {
+        if (code == EmergencyCallFragment.REQUEST_CONTACT) {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS)
-                != PackageManager.PERMISSION_GRANTED) {
+                != PackageManager.PERMISSION_GRANTED
+            ) {
 
-                ActivityCompat.requestPermissions(this,
-                    arrayOf(Manifest.permission.READ_CONTACTS), REQUEST_CONTACTS_PERMISSION)
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.READ_CONTACTS), REQUEST_CONTACTS_PERMISSION
+                )
             } else {
                 val intent = Intent(Intent.ACTION_PICK, ContactsContract.CommonDataKinds.Phone.CONTENT_URI)
                 startActivityForResult(intent, EmergencyCallFragment.REQUEST_CONTACT)
@@ -254,20 +227,21 @@ class HomeActivity : AppCompatActivity(), LaunchBottomSheetListener, JobListener
     }
 
     override fun launchBottomSheet(id: Int) {
-        if(id == 1) {
-            bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
-        } else if (id == 2) {
+        if (id == 2) {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS)
-                != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this,
-                    arrayOf(Manifest.permission.SEND_SMS), REQUEST_SMS_PERMISSION)
+                != PackageManager.PERMISSION_GRANTED
+            ) {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.SEND_SMS), REQUEST_SMS_PERMISSION
+                )
             } else {
                 sendMessageToEveryOne()
             }
 
-        } else if(id == 3) {
+        } else if (id == 3) {
             bottomSheetBehavior2.state = BottomSheetBehavior.STATE_EXPANDED
-        } else if(id == 5) {
+        } else if (id == 5) {
             bottomSheetBehavior2.state = BottomSheetBehavior.STATE_HIDDEN
         }
     }
@@ -276,12 +250,20 @@ class HomeActivity : AppCompatActivity(), LaunchBottomSheetListener, JobListener
         viewModel.personalEmergencyList.observe(this, Observer {
             it?.let { allList ->
                 val smsManager = SmsManager.getDefault()
-                for(contact in allList.subList(0,2)) {
-                    smsManager.sendTextMessage(contact.phoneNo, null, "Hello ${contact.name}",
-                        null, null)
+                for (contact in allList.subList(0, 2)) {
+                    smsManager.sendTextMessage(
+                        contact.phoneNo, null, "Hello ${contact.name}",
+                        null, null
+                    )
                 }
                 viewModel.personalEmergencyList.removeObservers(this)
             }
         })
+    }
+
+    companion object {
+        const val REQUEST_CONTACTS_PERMISSION = 1234
+        const val REQUEST_CALL_PERMISSION = 1235
+        const val REQUEST_SMS_PERMISSION = 1236
     }
 }

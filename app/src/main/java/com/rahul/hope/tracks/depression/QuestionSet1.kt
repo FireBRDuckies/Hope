@@ -1,4 +1,4 @@
-package com.rahul.hope
+package com.rahul.hope.tracks.depression
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
+import com.rahul.hope.Answers
+import com.rahul.hope.R
 
 import kotlinx.android.synthetic.main.fragment_question_set1.*
 

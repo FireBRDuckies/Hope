@@ -7,14 +7,13 @@ import android.widget.Toast
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import com.rahul.hope.R
-import com.rahul.hope.STATUS
 import com.rahul.hope.sharedPath
 import java.util.*
 
 class LoginActivity : AppCompatActivity() {
 
     private var mFirebaseAuth: FirebaseAuth? = null
-    private var mAuthStateListner: FirebaseAuth.AuthStateListener? = null
+    private var mAuthStateListener: FirebaseAuth.AuthStateListener? = null
     private var mUsername: String? = null
     val ANONYMOUS = "anonymous"
     private val RC_SIGN_IN = 1
@@ -24,20 +23,13 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
 
         mUsername = ANONYMOUS
-        val sharedPreferences = this.getSharedPreferences(sharedPath, 0)
         mFirebaseAuth = FirebaseAuth.getInstance()
 
-        mAuthStateListner = FirebaseAuth.AuthStateListener { firebaseAuth ->
+        mAuthStateListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
             val user = firebaseAuth.currentUser
             if (user != null) {
-                val progress = sharedPreferences.getFloat(STATUS, 0f).toInt()
-                if(progress == 0){
-                    startActivity(Intent(this, TestActivity::class.java))
-                    finish()
-                } else {
-                    startActivity(Intent(this, HomeActivity::class.java))
-                    finish()
-                }
+                startActivity(Intent(this, HomeActivity::class.java))
+                finish()
 
                 onSignedInInitialize(user.displayName)
             } else {
@@ -80,15 +72,15 @@ class LoginActivity : AppCompatActivity() {
 
     protected override fun onResume() {
         super.onResume()
-        if (mAuthStateListner != null) {
-            mFirebaseAuth!!.addAuthStateListener(mAuthStateListner!!)
+        if (mAuthStateListener != null) {
+            mFirebaseAuth!!.addAuthStateListener(mAuthStateListener!!)
         }
     }
 
     protected override fun onPause() {
         super.onPause()
-        if (mAuthStateListner != null) {
-            mFirebaseAuth!!.removeAuthStateListener(mAuthStateListner!!)
+        if (mAuthStateListener != null) {
+            mFirebaseAuth!!.removeAuthStateListener(mAuthStateListener!!)
         }
     }
 }

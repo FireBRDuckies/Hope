@@ -11,15 +11,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentPagerAdapter
-import com.rahul.hope.QuestionSet1
-import com.rahul.hope.QuestionSet2
-import com.rahul.hope.QuestionSet3
+import com.rahul.hope.tracks.depression.QuestionSet1
+import com.rahul.hope.tracks.depression.QuestionSet2
+import com.rahul.hope.tracks.depression.QuestionSet3
 import com.rahul.hope.R
 
-import kotlinx.android.synthetic.main.activity_test.*
+import kotlinx.android.synthetic.main.activity_questionnaire_depression.*
 import kotlinx.android.synthetic.main.fragment_test.view.*
 
-class TestActivity : AppCompatActivity() {
+class QuestionnaireDepressionActivity : AppCompatActivity() {
 
     /**
      * The [androidx.viewpager.widget.PagerAdapter] that will provide
@@ -33,15 +33,13 @@ class TestActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_test)
+        setContentView(R.layout.activity_questionnaire_depression)
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = SectionsPagerAdapter(supportFragmentManager)
 
         // Set up the ViewPager with the sections adapter.
         container.adapter = mSectionsPagerAdapter
-
-
     }
 
 
@@ -68,11 +66,11 @@ class TestActivity : AppCompatActivity() {
     inner class SectionsPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
         override fun getItem(position: Int): Fragment {
-            if(position == 0) {
+            if (position == 0) {
                 return QuestionSet1(container)
-            }else if(position == 1) {
+            } else if (position == 1) {
                 return QuestionSet2(container)
-            }else if(position == 2){
+            } else if (position == 2) {
                 return QuestionSet3()
             }
             // getItem is called to instantiate the fragment for the given page.

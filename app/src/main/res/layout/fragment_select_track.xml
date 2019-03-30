@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".SelectTrackFragment"
+        app:cardElevation="5dp">
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <TextView
+                android:text="Save me from"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView15" app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="16dp" app:layout_constraintTop_toTopOf="parent"
+                android:textAppearance="@style/Base.TextAppearance.MaterialComponents.Headline6"
+                android:textAllCaps="true"/>
+        <Button
+                android:text="Common Disease"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/commonDiseaseButton"
+                app:layout_constraintTop_toBottomOf="@id/textView15"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintEnd_toStartOf="@+id/button5" android:layout_marginStart="24dp"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
+        <Button
+                android:text="Social Phobia"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/button5"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="16dp" app:layout_constraintTop_toBottomOf="@id/textView15"
+                app:layout_constraintStart_toEndOf="@+id/commonDiseaseButton" app:layout_constraintHorizontal_bias="0.5"
+                android:layout_marginEnd="24dp" style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
+        <Button
+                android:text="Depression"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/depressionButton" app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toStartOf="@+id/button7"
+                app:layout_constraintHorizontal_chainStyle="spread_inside" android:layout_marginStart="24dp"
+                android:layout_marginTop="16dp" app:layout_constraintTop_toBottomOf="@+id/commonDiseaseButton"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
+        <Button
+                android:text="Severe Disease"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/button7" app:layout_constraintStart_toEndOf="@+id/depressionButton"
+                app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="16dp" app:layout_constraintTop_toBottomOf="@+id/button5"
+                android:layout_marginEnd="24dp" style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

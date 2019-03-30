@@ -29,34 +29,37 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/fab_margin"
-            app:srcCompat="@drawable/ic_add_black_24dp" app:backgroundTint="@color/colorAccent"/>
-    <View
+            app:srcCompat="@drawable/ic_add_black_24dp"
+            app:backgroundTint="@color/colorAccent"/>
+    <!--<View
             android:id="@+id/shadowView"
             android:layout_width="match_parent"
             android:layout_height="24dp"
             android:background="@drawable/shape_gradient_top_shadow"
-            app:layout_anchor="@id/design_bottom_sheet" />
+            app:layout_anchor="@id/design_bottom_sheet"/>
 
 
-    <fragment android:layout_width="match_parent" android:layout_height="wrap_content"
-                                                  android:id="@+id/design_bottom_sheet"
-                                                  app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
-                                                  app:behavior_hideable="true"
-                                                    app:elevation = "20dp"
-                                                  android:name="com.rahul.hope.fragments.EmergencyCallFragment"/>
+    <fragment android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:id="@+id/design_bottom_sheet"
+              app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+              app:behavior_hideable="true"
+              app:elevation="20dp"
+              android:name="com.rahul.hope.fragments.EmergencyCallFragment"/>-->
 
     <View
             android:id="@+id/shadowView2"
             android:layout_width="match_parent"
             android:layout_height="24dp"
             android:background="@drawable/shape_gradient_top_shadow"
-            app:layout_anchor="@id/design_bottom_sheet2" />
+            app:layout_anchor="@id/design_bottom_sheet2"/>
 
 
-    <fragment android:layout_width="match_parent" android:layout_height="wrap_content"
+    <fragment android:layout_width="match_parent"
+              android:layout_height="wrap_content"
               android:id="@+id/design_bottom_sheet2"
               app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
               app:behavior_hideable="true"
-              app:elevation = "20dp"
-              android:name="com.rahul.hope.fragments.SearchFragment"/>
+              app:elevation="20dp"
+              android:name="com.rahul.hope.SelectTrackFragment"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

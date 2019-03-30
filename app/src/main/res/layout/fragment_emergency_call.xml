@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-                                   xmlns:app="http://schemas.android.com/apk/res-auto"
-                                   xmlns:tools="http://schemas.android.com/tools"
-                                   android:layout_width="match_parent"
-                                   android:layout_height="match_parent"
-                                   tools:context=".fragments.EmergencyCallFragment"
-app:cardElevation="5dp">
+<androidx.cardview.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".fragments.EmergencyCallFragment"
+        app:cardElevation="5dp">
     <androidx.core.widget.NestedScrollView android:layout_width="match_parent"
                                            android:layout_height="match_parent">
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -35,7 +36,7 @@ app:cardElevation="5dp">
                     android:layout_height="wrap_content"
                     android:id="@+id/textView2" android:layout_marginTop="32dp"
                     app:layout_constraintTop_toBottomOf="@+id/textView" app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginStart="16dp"  android:textSize="16sp"/>
+                    android:layout_marginStart="16dp" android:textSize="16sp"/>
             <TextView
                     android:text="Your Emergency Contacts"
                     android:layout_width="wrap_content"
@@ -43,14 +44,14 @@ app:cardElevation="5dp">
                     android:id="@+id/textView3" android:layout_marginTop="16dp"
                     app:layout_constraintTop_toBottomOf="@+id/standardContactsRv"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginStart="16dp"  android:textSize="16sp"/>
+                    android:layout_marginStart="16dp" android:textSize="16sp"/>
             <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     app:layout_constraintTop_toBottomOf="@+id/textView2" app:layout_constraintStart_toStartOf="parent"
                     android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginEnd="8dp" android:id="@+id/standardContactsRv" />
+                    android:layout_marginEnd="8dp" android:id="@+id/standardContactsRv"/>
             <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

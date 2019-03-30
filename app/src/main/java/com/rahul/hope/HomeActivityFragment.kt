@@ -12,7 +12,6 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.rahul.hope.activities.ChatActivity
-import com.rahul.hope.activities.HopeApplication
 import com.rahul.hope.adapters.ChatRoomAdapter
 import com.rahul.hope.listeners.LaunchBottomSheetListener
 import com.rahul.hope.viewmodels.ChatRoomViewModel
@@ -20,8 +19,8 @@ import com.rahul.hope.viewmodels.RoomViewModelFactory
 import kotlinx.android.synthetic.main.fragment_home.*
 
 class HomeActivityFragment : Fragment() {
-    private var launcherBottomSheetListener : LaunchBottomSheetListener? = null
-    private lateinit var viewModelFactory : RoomViewModelFactory
+    private var launcherBottomSheetListener: LaunchBottomSheetListener? = null
+    private lateinit var viewModelFactory: RoomViewModelFactory
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -46,7 +45,7 @@ class HomeActivityFragment : Fragment() {
                 adapterChat.swapList(allChatRooms)
             }
         })
-        call911Button.setOnClickListener { launcherBottomSheetListener?.launchBottomSheet(1) }
+//        call911Button.setOnClickListener { launcherBottomSheetListener?.launchBottomSheet(1) }
     }
 
     override fun onAttach(context: Context) {
