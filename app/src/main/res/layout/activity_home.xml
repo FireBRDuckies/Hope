@@ -31,7 +31,7 @@
             android:layout_margin="@dimen/fab_margin"
             app:srcCompat="@drawable/ic_add_black_24dp"
             app:backgroundTint="@color/colorAccent"/>
-    <!--<View
+    <View
             android:id="@+id/shadowView"
             android:layout_width="match_parent"
             android:layout_height="24dp"
@@ -45,7 +45,7 @@
               app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
               app:behavior_hideable="true"
               app:elevation="20dp"
-              android:name="com.rahul.hope.fragments.EmergencyCallFragment"/>-->
+              android:name="com.rahul.hope.fragments.EmergencyCallFragment"/>
 
     <View
             android:id="@+id/shadowView2"
@@ -62,4 +62,39 @@
               app:behavior_hideable="true"
               app:elevation="20dp"
               android:name="com.rahul.hope.SelectTrackFragment"/>
+
+
+    <View
+            android:id="@+id/shadowView3"
+            android:layout_width="match_parent"
+            android:layout_height="24dp"
+            android:background="@drawable/shape_gradient_top_shadow"
+            app:layout_anchor="@id/design_bottom_sheet3"/>
+
+
+    <fragment android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:id="@+id/design_bottom_sheet3"
+              app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+              app:behavior_hideable="true"
+              app:elevation="20dp"
+              android:name="com.rahul.hope.tracks.depression.SearchFragment"/>
+
+
+
+    <View
+            android:id="@+id/shadowView4"
+            android:layout_width="match_parent"
+            android:layout_height="24dp"
+            android:background="@drawable/shape_gradient_top_shadow"
+            app:layout_anchor="@id/design_bottom_sheet4"/>
+
+
+    <fragment android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:id="@+id/design_bottom_sheet4"
+              app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+              app:behavior_hideable="true"
+              app:elevation="20dp"
+              android:name="com.rahul.hope.tracks.depression.SearchFragment"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

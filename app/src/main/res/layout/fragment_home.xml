@@ -151,7 +151,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginStart="8dp" android:layout_marginEnd="8dp" android:id="@+id/chatRoomsRv"/>
-        <!--
+
                 <ImageView
                         android:src="@drawable/ic_call_911"
                         android:layout_width="48dp"
@@ -164,7 +164,6 @@
                         android:clickable="true"
                         android:padding="8dp"
                 />
-        -->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

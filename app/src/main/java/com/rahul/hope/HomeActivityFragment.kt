@@ -45,7 +45,7 @@ class HomeActivityFragment : Fragment() {
                 adapterChat.swapList(allChatRooms)
             }
         })
-//        call911Button.setOnClickListener { launcherBottomSheetListener?.launchBottomSheet(1) }
+        call911Button.setOnClickListener { launcherBottomSheetListener?.launchBottomSheet(1) }
     }
 
     override fun onAttach(context: Context) {
