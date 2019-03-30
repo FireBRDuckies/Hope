@@ -59,6 +59,7 @@ class HomeActivityFragment : Fragment() {
                 adapterChat.swapList(allChatRooms)
             }
         })
+        call911Button.setOnClickListener { launcherBottomSheetListener?.launchBottomSheet(1) }
         addChatRoom.setOnClickListener(View.OnClickListener { showDialog(activity!!) })
 
 //        call911Button.setOnClickListener { launcherBottomSheetListener?.launchBottomSheet(1) }
