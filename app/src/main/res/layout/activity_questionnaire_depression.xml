@@ -1,8 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.viewpager.widget.ViewPager
+<androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/container"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".tracks.depression.QuestionnaireDepressionActivity"/>
+        tools:context=".tracks.depression.QuestionnaireDepressionActivity">
+
+    <TextView
+            android:text="During the PAST 7 DAYS, I have..."
+            android:padding="16dp"
+            style="@android:style/TextAppearance.Material.Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/textView16"/>
+
+    <androidx.viewpager.widget.ViewPager
+            android:id="@+id/depressionPager"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            tools:context=".tracks.socialAnxiety.QuestionnaireSocialAnxietyActivity"
+            app:layout_constraintTop_toBottomOf="@+id/textView16"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintVertical_bias="1.0"/>
+
+    <TextView
+            android:id="@+id/selectedValueText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@android:style/TextAppearance.Material.Body1"
+            android:textAllCaps="true"
+            android:text="Never"
+            app:layout_constraintTop_toBottomOf="@+id/textView16"
+            app:layout_constraintBottom_toTopOf="@+id/responseSeekBar"
+            app:layout_constraintVertical_chainStyle="packed" android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="8dp"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintVertical_bias="0.47000003"/>
+
+    <SeekBar
+            style="@style/Widget.AppCompat.SeekBar.Discrete"
+            android:max="3"
+            android:progress="0"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/responseSeekBar"
+            app:layout_constraintTop_toBottomOf="@+id/selectedValueText"
+            app:layout_constraintBottom_toTopOf="@+id/nextButton" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="48dp" android:layout_marginEnd="48dp" android:layout_marginTop="32dp"/>
+
+    <Button
+            android:text="Next"
+            android:drawableStart="@drawable/ic_navigate_next_24dp"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+            app:icon="@drawable/ic_navigate_next_24dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/nextButton"
+            android:layout_marginBottom="64dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="32dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

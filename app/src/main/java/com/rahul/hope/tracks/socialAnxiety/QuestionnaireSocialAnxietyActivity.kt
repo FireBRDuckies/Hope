@@ -3,6 +3,8 @@ package com.rahul.hope.tracks.socialAnxiety
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
+import android.widget.SeekBar
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -10,16 +12,18 @@ import androidx.fragment.app.FragmentPagerAdapter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.FirebaseDatabase
+import com.rahul.hope.R
 import com.rahul.hope.fragments.QuestionFragment
 import kotlinx.android.synthetic.main.activity_questionnaire_social_anxiety.*
-import org.jetbrains.anko.toast
 
 
 class QuestionnaireSocialAnxietyActivity : AppCompatActivity() {
 
-    var currentQuestion: Int = 0
-    var questionKey: String = "question"
-    lateinit var scores: ArrayList<Int>
+    private var currentQuestion: Int = 0
+    private var questionKey: String = "question"
+    private lateinit var scores: ArrayList<Int>
+    private lateinit var responseSeekBar: SeekBar
+    private lateinit var selectedValueText: TextView
 
     private var mCurrentUser: FirebaseUser? = null
     private lateinit var mFirebaseDb: FirebaseDatabase
@@ -44,6 +48,8 @@ class QuestionnaireSocialAnxietyActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(com.rahul.hope.R.layout.activity_questionnaire_social_anxiety)
+        responseSeekBar = findViewById(R.id.responseSeekBar)
+        selectedValueText = findViewById(R.id.selectedValueText)
 
         mCurrentUser = FirebaseAuth.getInstance().currentUser
         mFirebaseDb = FirebaseDatabase.getInstance()
