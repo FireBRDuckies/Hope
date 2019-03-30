@@ -17,6 +17,20 @@ import com.rahul.hope.listeners.LaunchBottomSheetListener
 import com.rahul.hope.viewmodels.ChatRoomViewModel
 import com.rahul.hope.viewmodels.RoomViewModelFactory
 import kotlinx.android.synthetic.main.fragment_home.*
+import android.R.string.cancel
+import android.widget.Toast
+import com.firebase.ui.auth.AuthUI.getApplicationContext
+import android.R.layout
+import android.widget.FrameLayout
+//import com.sun.deploy.ui.CacheUpdateProgressDialog.dismiss
+import android.graphics.drawable.ColorDrawable
+//import netscape.javascript.JSObject.getWindow
+import android.view.Window.FEATURE_NO_TITLE
+import android.app.Activity
+import android.app.Dialog
+import android.view.Window
+import android.widget.Button
+
 
 class HomeActivityFragment : Fragment() {
     private var launcherBottomSheetListener: LaunchBottomSheetListener? = null
@@ -46,11 +60,36 @@ class HomeActivityFragment : Fragment() {
             }
         })
         call911Button.setOnClickListener { launcherBottomSheetListener?.launchBottomSheet(1) }
+        addChatRoom.setOnClickListener(View.OnClickListener { showDialog(activity!!) })
+
+//        call911Button.setOnClickListener { launcherBottomSheetListener?.launchBottomSheet(1) }
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         launcherBottomSheetListener = context as LaunchBottomSheetListener
         viewModelFactory = (context.applicationContext as HopeApplication).applicationComponent.getViewModelFactory()
+    }
+
+    fun showDialog(activity: Activity) {
+        val dialog = Dialog(activity)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.dialog_track)
+        dialog.getWindow().setBackgroundDrawable(ColorDrawable(android.graphics.Color.TRANSPARENT))
+
+        val mDialogNo = dialog.findViewById<Button>(R.id.depressionButton)
+        mDialogNo.setOnClickListener(View.OnClickListener {
+            Toast.makeText(context, "Depression", Toast.LENGTH_SHORT).show()
+            dialog.dismiss()
+        })
+
+        val mDialogOk = dialog.findViewById<Button>(R.id.socialAnxietyButton)
+        mDialogOk.setOnClickListener(View.OnClickListener {
+            Toast.makeText(context, "Social Anxiety", Toast.LENGTH_SHORT).show()
+            dialog.cancel()
+        })
+
+        dialog.show()
     }
 }
