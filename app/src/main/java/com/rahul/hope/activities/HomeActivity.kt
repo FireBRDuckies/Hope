@@ -38,10 +38,10 @@ import kotlinx.android.synthetic.main.content_home.*
 import kotlinx.android.synthetic.main.fragment_home.*
 
 class HomeActivity : AppCompatActivity(), LaunchBottomSheetListener, JobListener {
-    private var phoneNo = ""
-    private lateinit var fragment: View
-    private lateinit var sharedPreferences: SharedPreferences
     private val TAG = HomeActivity::class.java.simpleName
+    private var phoneNo = ""
+    private lateinit var fragment:View
+    private lateinit var sharedPreferences: SharedPreferences
     private lateinit var bottomSheetBehavior2: BottomSheetBehavior<View>
     private lateinit var dataRepository: DataRepository
     private lateinit var viewModel: ContactsViewModel
@@ -49,8 +49,8 @@ class HomeActivity : AppCompatActivity(), LaunchBottomSheetListener, JobListener
 
     private var displayName = FirebaseAuth.getInstance().currentUser?.displayName!!
     private val quotes = arrayOf(
-        "Good health and good sense are two of life's greatest blessings",
-        "To enjoy the glow of good health, you must exercise.",
+        "Do not let what you cannot do interfere with what you can do.",
+        "Although the world is full of suffering, it is also full of the overcoming of it.",
         "Never confuse a single defeat with a final defeat.",
         "Depression is a prison where you are both the suffering prisoner and the cruel jailer.",
         "Once you choose hope, anything is possible.",
@@ -71,11 +71,13 @@ class HomeActivity : AppCompatActivity(), LaunchBottomSheetListener, JobListener
 
         userNameTextView.text = "Hello, $displayName"
         val progress = sharedPreferences.getFloat(STATUS, 30f).toInt()
+        statusTextView.text = "$progress %"
+        statusProgressBar.progress = progress
         quoteTextView.text = quotes[(0..5).random()]
         fab.setOnClickListener {
             bottomSheetBehavior2.state = BottomSheetBehavior.STATE_EXPANDED
         }
-        fragment = findViewById((R.id.design_bottom_sheet2))
+        fragment= findViewById((R.id.design_bottom_sheet2))
         bottomSheetBehavior2 = BottomSheetBehavior.from(fragment)
         bottomSheetBehavior2.state = BottomSheetBehavior.STATE_HIDDEN
 
