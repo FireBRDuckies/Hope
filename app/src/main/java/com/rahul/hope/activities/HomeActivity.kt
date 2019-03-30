@@ -12,17 +12,19 @@ import android.os.Bundle
 import android.provider.ContactsContract
 import android.telephony.SmsManager
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.MotionEvent
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import com.rahul.hope.HopeApplication
 import com.rahul.hope.R
 import com.rahul.hope.STATUS
@@ -31,10 +33,10 @@ import com.rahul.hope.data.database.EmergencyContactEntry
 import com.rahul.hope.fragments.EmergencyCallFragment
 import com.rahul.hope.listeners.JobListener
 import com.rahul.hope.listeners.LaunchBottomSheetListener
+import com.rahul.hope.models.Appointment
 import com.rahul.hope.sharedPath
 import com.rahul.hope.viewmodels.ContactsViewModel
 import kotlinx.android.synthetic.main.activity_home.*
-import kotlinx.android.synthetic.main.content_home.*
 import kotlinx.android.synthetic.main.fragment_home.*
 
 class HomeActivity : AppCompatActivity(), LaunchBottomSheetListener, JobListener {
@@ -265,5 +267,19 @@ class HomeActivity : AppCompatActivity(), LaunchBottomSheetListener, JobListener
         const val REQUEST_CONTACTS_PERMISSION = 1234
         const val REQUEST_CALL_PERMISSION = 1235
         const val REQUEST_SMS_PERMISSION = 1236
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_home,menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        val id = item?.itemId
+        if(id == R.id.book_appointment){
+            val appointment = Appointment(statusProgressBar.progress.toLong())
+            FirebaseDatabase.getInstance().getReference("appointments/").push().setValue(appointment)
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

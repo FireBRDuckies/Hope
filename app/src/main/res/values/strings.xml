@@ -7,6 +7,7 @@
     <string name="textview">TextView</string>
     <string name="title_activity_test">TestActivity</string>
     <string name="section_format">Hello World from section: %1$d</string>
+    <string name="book_appointment">Book Appointment</string>
     <string-array name="race">
         <item>Indian</item>
         <item>Black</item>
