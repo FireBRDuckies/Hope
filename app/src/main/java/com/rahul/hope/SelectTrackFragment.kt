@@ -29,7 +29,9 @@ class SelectTrackFragment : Fragment() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        depressionButton.setOnClickListener { val intent = Intent(context,QuestionnaireDepressionActivity::class.java)
-            startActivity(intent) }
+        depressionButton.setOnClickListener {
+            val intent = Intent(context, QuestionnaireDepressionActivity::class.java)
+            startActivity(intent)
+        }
     }
 }
