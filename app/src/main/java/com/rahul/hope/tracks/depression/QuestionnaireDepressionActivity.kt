@@ -1,4 +1,4 @@
-package com.rahul.hope.activities
+package com.rahul.hope.tracks.depression
 
 
 import androidx.fragment.app.Fragment
@@ -11,9 +11,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentPagerAdapter
-import com.rahul.hope.tracks.depression.QuestionSet1
-import com.rahul.hope.tracks.depression.QuestionSet2
-import com.rahul.hope.tracks.depression.QuestionSet3
 import com.rahul.hope.R
 
 import kotlinx.android.synthetic.main.activity_questionnaire_depression.*
@@ -75,7 +72,9 @@ class QuestionnaireDepressionActivity : AppCompatActivity() {
             }
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1)
+            return PlaceholderFragment.newInstance(
+                position + 1
+            )
         }
 
         override fun getCount(): Int {
