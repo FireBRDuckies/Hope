@@ -44,7 +44,12 @@ class HomeActivity : AppCompatActivity(), LaunchBottomSheetListener, JobListener
     private var phoneNo = ""
     private lateinit var fragment:View
     private lateinit var sharedPreferences: SharedPreferences
+
+    private lateinit var bottomSheetBehavior: BottomSheetBehavior<View>
     private lateinit var bottomSheetBehavior2: BottomSheetBehavior<View>
+    private lateinit var bottomSheetBehavior3: BottomSheetBehavior<View>
+    private lateinit var bottomSheetBehavior4 : BottomSheetBehavior<View>
+
     private lateinit var dataRepository: DataRepository
     private lateinit var viewModel: ContactsViewModel
     private var currentSheet = 0
@@ -69,19 +74,60 @@ class HomeActivity : AppCompatActivity(), LaunchBottomSheetListener, JobListener
         val viewModelFactory = (application as HopeApplication).applicationComponent.getViewModelFactory()
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(ContactsViewModel::class.java)
 
+        shadowView.visibility = View.GONE
         shadowView2.visibility = View.GONE
+        shadowView3.visibility = View.GONE
+
 
         userNameTextView.text = "Hello, $displayName"
         val progress = sharedPreferences.getFloat(STATUS, 30f).toInt()
         statusTextView.text = "$progress %"
         statusProgressBar.progress = progress
         quoteTextView.text = quotes[(0..5).random()]
+
+
+
         fab.setOnClickListener {
             bottomSheetBehavior2.state = BottomSheetBehavior.STATE_EXPANDED
         }
         fragment= findViewById((R.id.design_bottom_sheet2))
+
+
+        bottomSheetBehavior = BottomSheetBehavior.from(design_bottom_sheet.view)
         bottomSheetBehavior2 = BottomSheetBehavior.from(fragment)
+        bottomSheetBehavior3 = BottomSheetBehavior.from(design_bottom_sheet3.view)
+        bottomSheetBehavior4 = BottomSheetBehavior.from(design_bottom_sheet4.view)
+
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
         bottomSheetBehavior2.state = BottomSheetBehavior.STATE_HIDDEN
+        bottomSheetBehavior3.state = BottomSheetBehavior.STATE_HIDDEN
+        bottomSheetBehavior4.state = BottomSheetBehavior.STATE_HIDDEN
+
+        // bottom sheet behaviour depression click listener
+
+        //bottom sheet behaviour depression click listener
+
+
+        bottomSheetBehavior.setBottomSheetCallback(object: BottomSheetBehavior.BottomSheetCallback() {
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+
+            }
+
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                when(newState) {
+                    BottomSheetBehavior.STATE_HIDDEN -> {
+                        shadowView.visibility = View.GONE
+                        fab.show()
+                    }
+                    else -> {
+                        shadowView.visibility = View.VISIBLE
+                        fab.hide()
+                    }
+                }
+            }
+
+        })
+
 
         bottomSheetBehavior2.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
@@ -103,11 +149,65 @@ class HomeActivity : AppCompatActivity(), LaunchBottomSheetListener, JobListener
             }
 
         })
+
+        bottomSheetBehavior3.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+
+            }
+
+            @SuppressLint("SwitchIntDef")
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                when (newState) {
+                    BottomSheetBehavior.STATE_HIDDEN -> {
+                        shadowView3.visibility = View.GONE
+                        fab.show()
+                    }
+                    else -> {
+                        shadowView3.visibility = View.VISIBLE
+                        fab.hide()
+                    }
+                }
+            }
+
+        })
+
+        bottomSheetBehavior4.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+
+            }
+
+            @SuppressLint("SwitchIntDef")
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                when (newState) {
+                    BottomSheetBehavior.STATE_HIDDEN -> {
+                        shadowView4.visibility = View.GONE
+                        fab.show()
+                    }
+                    else -> {
+                        shadowView4.visibility = View.VISIBLE
+                        fab.hide()
+                    }
+                }
+            }
+
+        })
     }
 
     override fun dispatchTouchEvent(event: MotionEvent): Boolean {
         if (event.action == MotionEvent.ACTION_DOWN) {
-            if (bottomSheetBehavior2.state == BottomSheetBehavior.STATE_EXPANDED) {
+
+            if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED) {
+
+                val outRect = Rect()
+                design_bottom_sheet.view?.getGlobalVisibleRect(outRect)
+
+                if (!outRect.contains(event.rawX.toInt(), event.rawY.toInt())) {
+                    bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+
+                    return true
+                }
+
+            } else if (bottomSheetBehavior2.state == BottomSheetBehavior.STATE_EXPANDED) {
 
                 val outRect = Rect()
                 fragment.getGlobalVisibleRect(outRect)
@@ -124,7 +224,9 @@ class HomeActivity : AppCompatActivity(), LaunchBottomSheetListener, JobListener
     }
 
     override fun onBackPressed() {
-        if (bottomSheetBehavior2.state != BottomSheetBehavior.STATE_HIDDEN) {
+        if(bottomSheetBehavior.state != BottomSheetBehavior.STATE_HIDDEN) {
+            bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+        } else if (bottomSheetBehavior2.state != BottomSheetBehavior.STATE_HIDDEN) {
             bottomSheetBehavior2.state = BottomSheetBehavior.STATE_HIDDEN
         } else {
             super.onBackPressed()
@@ -229,6 +331,9 @@ class HomeActivity : AppCompatActivity(), LaunchBottomSheetListener, JobListener
     }
 
     override fun launchBottomSheet(id: Int) {
+        if(id == 1) {
+            bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+        }
         if (id == 2) {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS)
                 != PackageManager.PERMISSION_GRANTED
