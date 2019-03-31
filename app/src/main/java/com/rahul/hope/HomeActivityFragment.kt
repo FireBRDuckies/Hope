@@ -6,11 +6,13 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.speech.RecognizerIntent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -24,10 +26,12 @@ import com.rahul.hope.viewmodels.ChatRoomViewModel
 import com.rahul.hope.viewmodels.RoomViewModelFactory
 import kotlinx.android.synthetic.main.fragment_home.*
 
-
+const val SPEECH_REQUEST_CODE = 0
 class HomeActivityFragment : Fragment() {
+
     private var launcherBottomSheetListener: LaunchBottomSheetListener? = null
     private lateinit var viewModelFactory: RoomViewModelFactory
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -54,6 +58,7 @@ class HomeActivityFragment : Fragment() {
         })
         call911Button.setOnClickListener { launcherBottomSheetListener?.launchBottomSheet(1) }
         addChatRoom.setOnClickListener(View.OnClickListener { showDialog(activity!!) })
+        dayStatus.setOnClickListener(View.OnClickListener { showDayStatusDialog(activity!!) })
 
 //        call911Button.setOnClickListener { launcherBottomSheetListener?.launchBottomSheet(1) }
     }
@@ -83,7 +88,46 @@ class HomeActivityFragment : Fragment() {
             dialog.cancel()
             launcherBottomSheetListener?.launchBottomSheet(7)
         }
-
         dialog.show()
     }
+
+    private fun showDayStatusDialog(activity: Activity) {
+        val dialog = Dialog(activity)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.dialog_day_status)
+        dialog.getWindow().setBackgroundDrawable(ColorDrawable(android.graphics.Color.TRANSPARENT))
+        val submitButton = dialog.findViewById<ImageButton>(R.id.submitButton)
+        submitButton.setOnClickListener {
+            //val text = queryTv.text.toString()
+
+            apiService.getGroup(text).enqueue(object : Callback<Query> {
+                override fun onFailure(call: Call<Query>, t: Throwable) {
+                    resultTv.text = "Failed"
+                }
+
+                override fun onResponse(call: Call<Query>, response: Response<Query>) {
+                    if(response.isSuccessful) {
+                        response.body()?.let {
+                            cancelButton.visibility = View.VISIBLE
+                            resultTv.text = it.name
+                            headTv.visibility = View.VISIBLE
+                            resultTv.visibility = View.VISIBLE
+                            joinButton.visibility = View.VISIBLE
+                            launchBottomSheetListener?.launchBottomSheet(3)
+                            data = it
+                        }
+                    } else {
+                        resultTv.text = "Server error"
+                    }
+
+                }
+
+            })
+        }
+        dialog.show()
+    }
+
+
+    // Create an intent that can start the Speech Recognizer activity
+
 }
