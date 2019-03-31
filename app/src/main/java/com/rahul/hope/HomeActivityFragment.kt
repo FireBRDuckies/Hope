@@ -74,12 +74,14 @@ class HomeActivityFragment : Fragment() {
         mDialogDepression.setOnClickListener {
             Toast.makeText(context, "Depression", Toast.LENGTH_SHORT).show()
             dialog.dismiss()
+            launcherBottomSheetListener?.launchBottomSheet(6)
         }
 
         val mDialogAnxiety = dialog.findViewById<Button>(R.id.socialAnxietyButton)
         mDialogAnxiety.setOnClickListener {
             Toast.makeText(context, "Social Anxiety", Toast.LENGTH_SHORT).show()
             dialog.cancel()
+            launcherBottomSheetListener?.launchBottomSheet(7)
         }
 
         dialog.show()
