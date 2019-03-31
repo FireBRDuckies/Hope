@@ -21,6 +21,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.rahul.hope.activities.ChatActivity
 import com.rahul.hope.adapters.ChatRoomAdapter
+import com.rahul.hope.data.DataRepository
+import com.rahul.hope.data.network.ApiService
 import com.rahul.hope.listeners.LaunchBottomSheetListener
 import com.rahul.hope.viewmodels.ChatRoomViewModel
 import com.rahul.hope.viewmodels.RoomViewModelFactory
@@ -31,6 +33,8 @@ class HomeActivityFragment : Fragment() {
 
     private var launcherBottomSheetListener: LaunchBottomSheetListener? = null
     private lateinit var viewModelFactory: RoomViewModelFactory
+    private lateinit var roomViewModelFactory: DataRepository
+    private lateinit var apiService: ApiService
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -65,6 +69,8 @@ class HomeActivityFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
+        roomViewModelFactory = (activity?.application as HopeApplication).applicationComponent.getRepository()
+        apiService = (activity?.application as HopeApplication).applicationComponent.getApiService()
         launcherBottomSheetListener = context as LaunchBottomSheetListener
         viewModelFactory = (context.applicationContext as HopeApplication).applicationComponent.getViewModelFactory()
     }
@@ -100,29 +106,6 @@ class HomeActivityFragment : Fragment() {
         submitButton.setOnClickListener {
             //val text = queryTv.text.toString()
 
-            apiService.getGroup(text).enqueue(object : Callback<Query> {
-                override fun onFailure(call: Call<Query>, t: Throwable) {
-                    resultTv.text = "Failed"
-                }
-
-                override fun onResponse(call: Call<Query>, response: Response<Query>) {
-                    if(response.isSuccessful) {
-                        response.body()?.let {
-                            cancelButton.visibility = View.VISIBLE
-                            resultTv.text = it.name
-                            headTv.visibility = View.VISIBLE
-                            resultTv.visibility = View.VISIBLE
-                            joinButton.visibility = View.VISIBLE
-                            launchBottomSheetListener?.launchBottomSheet(3)
-                            data = it
-                        }
-                    } else {
-                        resultTv.text = "Server error"
-                    }
-
-                }
-
-            })
         }
         dialog.show()
     }
