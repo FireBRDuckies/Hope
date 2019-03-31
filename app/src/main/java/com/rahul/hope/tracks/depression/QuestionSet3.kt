@@ -60,10 +60,8 @@ class QuestionSet3 : Fragment() {
                     Answers.Virgin = radioButton10.text.toString()
                 }
 
-                Log.v("Answers:",
-                    Answers.Gender +" "+ Answers.Age +" "+ Answers.Bodyweight +" "+ Answers.Depressed +" "+ Answers.Education +" "+ Answers.Employment +" "+ Answers.Friends +" "+ Answers.Income +" "+ Answers.Race +" "+ Answers.Sexuality +" "+ Answers.SocialFear +" "+ Answers.Virgin
+                Log.v("Answers:",Answers.Gender +" "+ Answers.Age +" "+ Answers.Bodyweight +" "+ Answers.Depressed +" "+ Answers.Education +" "+ Answers.Employment +" "+ Answers.Friends +" "+ Answers.Income +" "+ Answers.Race +" "+ Answers.Sexuality +" "+ Answers.SocialFear +" "+ Answers.Virgin
                 )
-
 
             }
             getAnalysis()
