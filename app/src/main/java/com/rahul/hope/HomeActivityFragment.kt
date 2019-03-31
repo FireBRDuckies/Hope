@@ -52,7 +52,6 @@ class HomeActivityFragment : Fragment() {
                 adapterChat.swapList(allChatRooms)
             }
         })
-        call911Button.setOnClickListener { launcherBottomSheetListener?.launchBottomSheet(1) }
         addChatRoom.setOnClickListener(View.OnClickListener { showDialog(activity!!) })
 
 //        call911Button.setOnClickListener { launcherBottomSheetListener?.launchBottomSheet(1) }
@@ -72,14 +71,12 @@ class HomeActivityFragment : Fragment() {
 
         val mDialogDepression = dialog.findViewById<Button>(R.id.depressionButton)
         mDialogDepression.setOnClickListener {
-            Toast.makeText(context, "Depression", Toast.LENGTH_SHORT).show()
             dialog.dismiss()
             launcherBottomSheetListener?.launchBottomSheet(6)
         }
 
         val mDialogAnxiety = dialog.findViewById<Button>(R.id.socialAnxietyButton)
         mDialogAnxiety.setOnClickListener {
-            Toast.makeText(context, "Social Anxiety", Toast.LENGTH_SHORT).show()
             dialog.cancel()
             launcherBottomSheetListener?.launchBottomSheet(7)
         }
