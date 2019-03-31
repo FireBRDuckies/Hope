@@ -218,6 +218,28 @@ class HomeActivity : AppCompatActivity(), LaunchBottomSheetListener, JobListener
                     return true
                 }
 
+            } else if (bottomSheetBehavior3.state == BottomSheetBehavior.STATE_EXPANDED) {
+
+                val outRect = Rect()
+                design_bottom_sheet3.view?.getGlobalVisibleRect(outRect)
+
+                if (!outRect.contains(event.rawX.toInt(), event.rawY.toInt())) {
+                    bottomSheetBehavior3.state = BottomSheetBehavior.STATE_HIDDEN
+
+                    return true
+                }
+
+            } else if (bottomSheetBehavior4.state == BottomSheetBehavior.STATE_EXPANDED) {
+
+                val outRect = Rect()
+                design_bottom_sheet4.view?.getGlobalVisibleRect(outRect)
+
+                if (!outRect.contains(event.rawX.toInt(), event.rawY.toInt())) {
+                    bottomSheetBehavior4.state = BottomSheetBehavior.STATE_HIDDEN
+
+                    return true
+                }
+
             }
         }
         return super.dispatchTouchEvent(event)
@@ -228,6 +250,10 @@ class HomeActivity : AppCompatActivity(), LaunchBottomSheetListener, JobListener
             bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
         } else if (bottomSheetBehavior2.state != BottomSheetBehavior.STATE_HIDDEN) {
             bottomSheetBehavior2.state = BottomSheetBehavior.STATE_HIDDEN
+        } else if (bottomSheetBehavior3.state != BottomSheetBehavior.STATE_HIDDEN) {
+            bottomSheetBehavior3.state = BottomSheetBehavior.STATE_HIDDEN
+        } else if (bottomSheetBehavior4.state != BottomSheetBehavior.STATE_HIDDEN) {
+            bottomSheetBehavior4.state = BottomSheetBehavior.STATE_HIDDEN
         } else {
             super.onBackPressed()
         }
@@ -350,6 +376,10 @@ class HomeActivity : AppCompatActivity(), LaunchBottomSheetListener, JobListener
             bottomSheetBehavior2.state = BottomSheetBehavior.STATE_EXPANDED
         } else if (id == 5) {
             bottomSheetBehavior2.state = BottomSheetBehavior.STATE_HIDDEN
+        } else if (id == 6) {
+            bottomSheetBehavior3.state = BottomSheetBehavior.STATE_EXPANDED
+        } else if(id == 7) {
+            bottomSheetBehavior4.state = BottomSheetBehavior.STATE_EXPANDED
         }
     }
 
