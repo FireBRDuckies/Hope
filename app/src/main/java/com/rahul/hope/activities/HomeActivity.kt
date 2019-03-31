@@ -78,7 +78,6 @@ class HomeActivity : AppCompatActivity(), LaunchBottomSheetListener, JobListener
         shadowView2.visibility = View.GONE
         shadowView3.visibility = View.GONE
 
-
         userNameTextView.text = "Hello, $displayName"
         val progress = sharedPreferences.getFloat(STATUS, 30f).toInt()
         statusTextView.text = "$progress %"
@@ -414,6 +413,8 @@ class HomeActivity : AppCompatActivity(), LaunchBottomSheetListener, JobListener
         if(id == R.id.action_book_appointment){
             val appointment = Appointment(statusProgressBar.progress.toLong())
             FirebaseDatabase.getInstance().getReference("appointments/").push().setValue(appointment)
+        } else if (id == R.id.action_emergency_call) {
+            launchBottomSheet(1)
         }
         return super.onOptionsItemSelected(item)
     }

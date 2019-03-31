@@ -29,4 +29,8 @@ interface ApiService {
     fun getGroup(
         @Field("text") text: String
     ) : Call<Query>
+
+    @FormUrlEncoded
+    @POST("depression/")
+    fun getDepressionLevel(@Field("text") text: String) : Call<Base>
 }
