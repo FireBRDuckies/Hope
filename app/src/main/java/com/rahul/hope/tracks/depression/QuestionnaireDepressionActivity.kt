@@ -2,6 +2,7 @@ package com.rahul.hope.tracks.depression
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.view.MotionEvent
 import android.view.View
 import android.widget.SeekBar
@@ -15,6 +16,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.rahul.hope.R
 import com.rahul.hope.fragments.QuestionFragment
 import kotlinx.android.synthetic.main.activity_questionnaire_depression.*
+import org.jetbrains.anko.alert
 
 class QuestionnaireDepressionActivity : AppCompatActivity() {
 
@@ -79,11 +81,12 @@ class QuestionnaireDepressionActivity : AppCompatActivity() {
                 depressionViewPager.currentItem = currentQuestion
                 scores.add(responseSeekBar.progress)
                 responseSeekBar.progress = 0
-            } else if (currentQuestion == 10) {
+            } else if (currentQuestion == 9) {
                 val depressionScoresRef = mFirebaseDb.getReference("users")
                 depressionScoresRef.child(mCurrentUser!!.uid).child("depressionScores")
-                    .child(System.currentTimeMillis().toString()).setValue(getUserAnxietyScore())
-                finish()
+                    .child(System.currentTimeMillis().toString()).setValue(getUserDepressionScore())
+                alert("Depression Level: ${(getUserDepressionScore() * 100) / 30}%").show()
+                Handler().postDelayed({ finish() }, 5000)
             }
             if (depressionViewPager.currentItem + 1 == questions.size) {
                 nextButton.text = "Done"
@@ -91,7 +94,7 @@ class QuestionnaireDepressionActivity : AppCompatActivity() {
         }
     }
 
-    private fun getUserAnxietyScore(): Int {
+    private fun getUserDepressionScore(): Int {
         var sum = 0
         scores.forEach {
             sum += it

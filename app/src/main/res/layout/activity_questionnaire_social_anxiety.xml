@@ -27,7 +27,7 @@
             app:layout_constraintVertical_bias="1.0"/>
 
     <TextView
-            android:id="@+id/selectedValueText"
+            android:id="@+id/selectedValueTextAnxiety"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@android:style/TextAppearance.Material.Body1"
@@ -46,7 +46,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/responseSeekBar"
-            app:layout_constraintTop_toBottomOf="@+id/selectedValueText"
+            app:layout_constraintTop_toBottomOf="@+id/selectedValueTextAnxiety"
             app:layout_constraintBottom_toTopOf="@+id/nextButton" app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="48dp" android:layout_marginEnd="48dp" android:layout_marginTop="32dp"/>

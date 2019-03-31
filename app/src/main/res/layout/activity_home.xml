@@ -96,5 +96,5 @@
               app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
               app:behavior_hideable="true"
               app:elevation="20dp"
-              android:name="com.rahul.hope.tracks.depression.SearchFragment"/>
+              android:name="com.rahul.hope.tracks.socialAnxiety.AnxietyChatOptionsFragment"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -29,6 +29,7 @@ import com.rahul.hope.HopeApplication
 import com.rahul.hope.R
 import com.rahul.hope.STATUS
 import com.rahul.hope.data.DataRepository
+import com.rahul.hope.data.database.ChatRoomEntry
 import com.rahul.hope.data.database.EmergencyContactEntry
 import com.rahul.hope.fragments.EmergencyCallFragment
 import com.rahul.hope.listeners.JobListener
@@ -37,20 +38,22 @@ import com.rahul.hope.models.Appointment
 import com.rahul.hope.sharedPath
 import com.rahul.hope.viewmodels.ContactsViewModel
 import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.android.synthetic.main.fragment_anxiety_chat_options.*
 import kotlinx.android.synthetic.main.fragment_home.*
 
 class HomeActivity : AppCompatActivity(), LaunchBottomSheetListener, JobListener {
     private val TAG = HomeActivity::class.java.simpleName
     private var phoneNo = ""
-    private lateinit var fragment:View
+    private lateinit var fragment: View
     private lateinit var sharedPreferences: SharedPreferences
 
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<View>
     private lateinit var bottomSheetBehavior2: BottomSheetBehavior<View>
     private lateinit var bottomSheetBehavior3: BottomSheetBehavior<View>
-    private lateinit var bottomSheetBehavior4 : BottomSheetBehavior<View>
+    private lateinit var bottomSheetBehavior4: BottomSheetBehavior<View>
 
-    private lateinit var dataRepository: DataRepository
+
+    private lateinit var roomViewModelFactory: DataRepository
     private lateinit var viewModel: ContactsViewModel
     private var currentSheet = 0
 
@@ -70,7 +73,7 @@ class HomeActivity : AppCompatActivity(), LaunchBottomSheetListener, JobListener
         setSupportActionBar(toolbar)
 
         sharedPreferences = this.getSharedPreferences(sharedPath, 0)
-        dataRepository = (application as HopeApplication).applicationComponent.getRepository()
+        roomViewModelFactory = (application as HopeApplication).applicationComponent.getRepository()
         val viewModelFactory = (application as HopeApplication).applicationComponent.getViewModelFactory()
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(ContactsViewModel::class.java)
 
@@ -89,13 +92,13 @@ class HomeActivity : AppCompatActivity(), LaunchBottomSheetListener, JobListener
         fab.setOnClickListener {
             bottomSheetBehavior2.state = BottomSheetBehavior.STATE_EXPANDED
         }
-        fragment= findViewById((R.id.design_bottom_sheet2))
+        fragment = findViewById((R.id.design_bottom_sheet2))
 
 
         bottomSheetBehavior = BottomSheetBehavior.from(design_bottom_sheet.view)
         bottomSheetBehavior2 = BottomSheetBehavior.from(fragment)
         bottomSheetBehavior3 = BottomSheetBehavior.from(design_bottom_sheet3.view)
-        bottomSheetBehavior4 = BottomSheetBehavior.from(design_bottom_sheet4.view)
+        bottomSheetBehavior4 = BottomSheetBehavior.from(findViewById(R.id.design_bottom_sheet4))
 
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
         bottomSheetBehavior2.state = BottomSheetBehavior.STATE_HIDDEN
@@ -107,13 +110,13 @@ class HomeActivity : AppCompatActivity(), LaunchBottomSheetListener, JobListener
         //bottom sheet behaviour depression click listener
 
 
-        bottomSheetBehavior.setBottomSheetCallback(object: BottomSheetBehavior.BottomSheetCallback() {
+        bottomSheetBehavior.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
 
             }
 
             override fun onStateChanged(bottomSheet: View, newState: Int) {
-                when(newState) {
+                when (newState) {
                     BottomSheetBehavior.STATE_HIDDEN -> {
                         shadowView.visibility = View.GONE
                         fab.show()
@@ -190,6 +193,11 @@ class HomeActivity : AppCompatActivity(), LaunchBottomSheetListener, JobListener
             }
 
         })
+
+        anxietyRoom1Button.setOnClickListener {
+            roomViewModelFactory.addChatRoom(ChatRoomEntry("bullied"))
+            launchBottomSheet(5)
+        }
     }
 
     override fun dispatchTouchEvent(event: MotionEvent): Boolean {
@@ -231,21 +239,20 @@ class HomeActivity : AppCompatActivity(), LaunchBottomSheetListener, JobListener
             } else if (bottomSheetBehavior4.state == BottomSheetBehavior.STATE_EXPANDED) {
 
                 val outRect = Rect()
-                design_bottom_sheet4.view?.getGlobalVisibleRect(outRect)
+                findViewById<View>(R.id.design_bottom_sheet4)?.getGlobalVisibleRect(outRect)
 
                 if (!outRect.contains(event.rawX.toInt(), event.rawY.toInt())) {
                     bottomSheetBehavior4.state = BottomSheetBehavior.STATE_HIDDEN
 
                     return true
                 }
-
             }
         }
         return super.dispatchTouchEvent(event)
     }
 
     override fun onBackPressed() {
-        if(bottomSheetBehavior.state != BottomSheetBehavior.STATE_HIDDEN) {
+        if (bottomSheetBehavior.state != BottomSheetBehavior.STATE_HIDDEN) {
             bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
         } else if (bottomSheetBehavior2.state != BottomSheetBehavior.STATE_HIDDEN) {
             bottomSheetBehavior2.state = BottomSheetBehavior.STATE_HIDDEN
@@ -278,7 +285,7 @@ class HomeActivity : AppCompatActivity(), LaunchBottomSheetListener, JobListener
                     if (c.moveToFirst()) {
                         val phone = c.getString(phoneIdx)
                         val name = c.getString(nameIdx)
-                        dataRepository.addContact(EmergencyContactEntry(phone, name))
+                        roomViewModelFactory.addContact(EmergencyContactEntry(phone, name))
                     } else {
                         Log.w(TAG, "No results")
                     }
@@ -356,7 +363,7 @@ class HomeActivity : AppCompatActivity(), LaunchBottomSheetListener, JobListener
     }
 
     override fun launchBottomSheet(id: Int) {
-        if(id == 1) {
+        if (id == 1) {
             bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
         }
         if (id == 2) {
@@ -375,9 +382,11 @@ class HomeActivity : AppCompatActivity(), LaunchBottomSheetListener, JobListener
             bottomSheetBehavior2.state = BottomSheetBehavior.STATE_EXPANDED
         } else if (id == 5) {
             bottomSheetBehavior2.state = BottomSheetBehavior.STATE_HIDDEN
+            bottomSheetBehavior3.state = BottomSheetBehavior.STATE_HIDDEN
+            bottomSheetBehavior4.state = BottomSheetBehavior.STATE_HIDDEN
         } else if (id == 6) {
             bottomSheetBehavior3.state = BottomSheetBehavior.STATE_EXPANDED
-        } else if(id == 7) {
+        } else if (id == 7) {
             bottomSheetBehavior4.state = BottomSheetBehavior.STATE_EXPANDED
         }
     }
@@ -404,13 +413,13 @@ class HomeActivity : AppCompatActivity(), LaunchBottomSheetListener, JobListener
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_home,menu)
+        menuInflater.inflate(R.menu.menu_home, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         val id = item?.itemId
-        if(id == R.id.action_book_appointment){
+        if (id == R.id.action_book_appointment) {
             val appointment = Appointment(statusProgressBar.progress.toLong())
             FirebaseDatabase.getInstance().getReference("appointments/").push().setValue(appointment)
         } else if (id == R.id.action_emergency_call) {
