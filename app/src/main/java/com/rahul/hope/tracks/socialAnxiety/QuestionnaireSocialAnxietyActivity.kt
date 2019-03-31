@@ -1,6 +1,7 @@
 package com.rahul.hope.tracks.socialAnxiety
 
 import android.os.Bundle
+import android.os.Handler
 import android.view.MotionEvent
 import android.view.View
 import android.widget.SeekBar
@@ -15,6 +16,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.rahul.hope.R
 import com.rahul.hope.fragments.QuestionFragment
 import kotlinx.android.synthetic.main.activity_questionnaire_social_anxiety.*
+import org.jetbrains.anko.alert
 
 
 class QuestionnaireSocialAnxietyActivity : AppCompatActivity() {
@@ -49,7 +51,7 @@ class QuestionnaireSocialAnxietyActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(com.rahul.hope.R.layout.activity_questionnaire_social_anxiety)
         responseSeekBar = findViewById(R.id.responseSeekBar)
-        selectedValueText = findViewById(R.id.selectedValueText)
+        selectedValueText = findViewById(R.id.selectedValueTextAnxiety)
 
         mCurrentUser = FirebaseAuth.getInstance().currentUser
         mFirebaseDb = FirebaseDatabase.getInstance()
@@ -62,6 +64,26 @@ class QuestionnaireSocialAnxietyActivity : AppCompatActivity() {
             }
         })
 
+        responseSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                selectedValueText.text = when (progress) {
+                    0 -> "Never"
+                    1 -> "Occasionally"
+                    2 -> "Half of the time"
+                    3 -> "Most of the time"
+                    4 -> "All of the time"
+                    else -> "Never"
+                }
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+            }
+
+        })
+
         nextButton.setOnClickListener {
             if (++currentQuestion < questions.size) {
                 socialAnxietyViewPager.currentItem = currentQuestion
@@ -71,7 +93,8 @@ class QuestionnaireSocialAnxietyActivity : AppCompatActivity() {
                 val anxietyScoresRef = mFirebaseDb.getReference("users")
                 anxietyScoresRef.child(mCurrentUser!!.uid).child("anxietyScores")
                     .child(System.currentTimeMillis().toString()).setValue(getUserAnxietyScore())
-                finish()
+                alert("Depression Level: ${(getUserAnxietyScore()*100)/40}%").show()
+                Handler().postDelayed({ finish() }, 5000)
             }
             if (socialAnxietyViewPager.currentItem + 1 == questions.size) {
                 nextButton.text = "Done"

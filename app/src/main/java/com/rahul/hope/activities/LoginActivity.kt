@@ -7,7 +7,9 @@ import android.widget.Toast
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import com.rahul.hope.R
+import com.rahul.hope.STATUS
 import com.rahul.hope.sharedPath
+import com.rahul.hope.tracks.depression.DepressionMeasureActivity
 import java.util.*
 
 class LoginActivity : AppCompatActivity() {
@@ -23,13 +25,20 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
 
         mUsername = ANONYMOUS
+        val sharedPreferences = this.getSharedPreferences(sharedPath, 0)
         mFirebaseAuth = FirebaseAuth.getInstance()
 
         mAuthStateListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
             val user = firebaseAuth.currentUser
             if (user != null) {
-                startActivity(Intent(this, HomeActivity::class.java))
-                finish()
+                val progress = sharedPreferences.getFloat(STATUS, 0f).toInt()
+                if (progress == 0) {
+                    startActivity(Intent(this, DepressionMeasureActivity::class.java))
+                    finish()
+                } else {
+                    startActivity(Intent(this, HomeActivity::class.java))
+                    finish()
+                }
 
                 onSignedInInitialize(user.displayName)
             } else {
